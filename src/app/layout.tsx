@@ -9,7 +9,7 @@ import { Suspense } from "react";
 const inter = Nunito({ subsets: ["latin"], weight: "400" });
 
 export const metadata: Metadata = {
-  title: "Lama Dev E-Commerce Application",
+  title: "koyome E-Commerce Application",
   description: "A complete e-commerce application with Next.js and Wix",
 };
 
