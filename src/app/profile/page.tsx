@@ -3,17 +3,23 @@ import { updateUser } from "@/lib/actions";
 import { wixClientServer } from "@/lib/wixClientServer";
 import { members } from "@wix/members";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { format } from "timeago.js";
 
 const ProfilePage = async () => {
+  let user;
   const wixClient = await wixClientServer();
 
-  const user = await wixClient.members.getCurrentMember({
-    fieldsets: [members.Set.FULL],
-  });
+  try {
+    user = await wixClient.members.getCurrentMember({
+      fieldsets: [members.Set.FULL],
+    });
+  } catch (error) {
+    console.log(error);
+  }
 
-  if (!user.member?.contactId) {
-    return <div className="">Not logged in!</div>;
+  if (!user?.member?.contactId) {
+    redirect("/");
   }
 
   const orderRes = await wixClient.orders.searchOrders({
@@ -73,7 +79,7 @@ const ProfilePage = async () => {
       <div className="w-full md:w-1/2">
         <h1 className="text-2xl">Orders</h1>
         <div className="mt-12 flex flex-col">
-          {orderRes.orders.map((order) => (
+          {/* {orderRes.orders.map((order) => (
             <Link
               href={`/orders/${order._id}`}
               key={order._id}
@@ -88,7 +94,7 @@ const ProfilePage = async () => {
               )}
               <span className="w-1/4">{order.status}</span>
             </Link>
-          ))}
+          ))} */}
         </div>
       </div>
     </div>

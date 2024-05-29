@@ -19,13 +19,47 @@ const Menu = () => {
       />
       {open && (
         <div className="absolute bg-black text-white left-0 top-20 w-full h-[calc(100vh-80px)] flex flex-col items-center justify-center gap-8 text-xl  z-10">
-          <Link href="/">Homepage</Link>
-          <Link href="/">Shop</Link>
-          <Link href="/">Deals</Link>
-          <Link href="/">About</Link>
-          <Link href="/">Contact</Link>
-          <Link href="/">Logout</Link>
-          <Link href="/">Cart(1)</Link>
+          <Link href="/list?cat=all-products">Shop</Link>
+          <Link href="/deals">Deals</Link>
+          <Link href="/about">About</Link>
+          <Link href="/contact">Contact</Link>
+          <div className="flex gap-3 items-center">
+            <Link
+              href="/login"
+              className="cursor-pointer p-4 rounded-md bg-white"
+              onClick={() => setOpen((prev) => !prev)}
+            >
+              <Image
+                src="/profile.png"
+                alt=""
+                width={22}
+                height={22}
+                className=" "
+              />
+            </Link>
+            <div className="cursor-pointer p-4 rounded-md bg-white">
+              <Image
+                src="/notification.png"
+                alt=""
+                width={22}
+                height={22}
+                className=" "
+              />
+            </div>
+            <Link
+              href="/cart"
+              className="cursor-pointer p-4 rounded-md bg-white"
+              onClick={() => setOpen((prev) => !prev)}
+            >
+              <Image
+                src="/cart.png"
+                alt=""
+                width={22}
+                height={22}
+                className=" "
+              />
+            </Link>
+          </div>
         </div>
       )}
     </div>

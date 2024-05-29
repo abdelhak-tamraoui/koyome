@@ -7,6 +7,7 @@ import Link from "next/link";
 const CartPage = () => {
   const wixClient = useWixClient();
   const { cart, isLoading, removeItem } = useCartStore();
+
   return (
     <div className="px-4 mt-6 md:mt-12 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
       <h2 className="text-2xl mb-8">Shopping Cart</h2>
@@ -84,7 +85,7 @@ const CartPage = () => {
           <div className="mt-8 bg-gray-100  p-4 rounded space-y-4">
             <div className="flex items-center justify-between font-semibold">
               <span className="md:text-lg xl:text-xl">Subtotal</span>
-              <span className="">${cart.subtotal.amount}</span>
+              {/* <span className="">${cart.subtotal.amount}</span> */}
             </div>
             <p className="text-gray-500 text-sm md:text-base xl:text-lg mt-2 mb-4">
               Shipping and taxes calculated at checkout.

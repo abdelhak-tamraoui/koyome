@@ -40,7 +40,6 @@ const ProductList = async ({
     }
   }
   const res = await productQuery.find();
-  console.log(res.items);
   return (
     <div className="mt-12 flex gap-x-8 gap-y-16 justify-between flex-wrap">
       {res.items.map((product: products.Product) => (
@@ -67,22 +66,10 @@ const ProductList = async ({
               />
             )}
           </div>
-          <div className="flex justify-between">
-            <span className="font-medium">{product.name}</span>
+          <div className="flex justify-between gap-3">
+            <span className="font-medium text-xl">{product.name}</span>
             <span className="font-semibold">${product.price?.price}</span>
           </div>
-          {product.additionalInfoSections && (
-            <div
-              className="text-sm text-gray-500"
-              dangerouslySetInnerHTML={{
-                __html: DOMPurify.sanitize(
-                  product.additionalInfoSections.find(
-                    (section: any) => section.title === "shortDesc"
-                  )?.description || ""
-                ),
-              }}
-            ></div>
-          )}
           <button className="rounded-2xl ring-1 ring-lama text-lama w-max py-2 px-4 text-xs hover:bg-lama hover:text-white">
             Add to Cart
           </button>
