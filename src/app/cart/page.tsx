@@ -4,9 +4,23 @@ import { useWixClient } from "@/hooks/useWixClient";
 import { media as wixMedia } from "@wix/sdk";
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 const CartPage = () => {
+  const [subtotal, setSubtotal] = useState(0);
   const wixClient = useWixClient();
   const { cart, isLoading, removeItem } = useCartStore();
+
+  useEffect(() => {
+    cart.lineItems?.forEach((item) => {
+      setSubtotal((prev) => {
+        if (item.price?.amount !== undefined && item.quantity !== undefined) {
+          prev += +item.price?.amount * item.quantity;
+          return prev;
+        }
+        return prev;
+      });
+    });
+  }, [cart.lineItems]);
 
   return (
     <div className="px-4 mt-6 md:mt-12 md:px-8 lg:px-16 xl:px-32 2xl:px-64">
@@ -85,15 +99,12 @@ const CartPage = () => {
           <div className="mt-8 bg-gray-100  p-4 rounded space-y-4">
             <div className="flex items-center justify-between font-semibold">
               <span className="md:text-lg xl:text-xl">Subtotal</span>
-              {/* <span className="">${cart.subtotal.amount}</span> */}
+              <span className="">${subtotal}</span>
             </div>
             <p className="text-gray-500 text-sm md:text-base xl:text-lg mt-2 mb-4">
               Shipping and taxes calculated at checkout.
             </p>
-            <div className="flex justify-between text-sm">
-              <button className="rounded-md py-3 px-4 ring-1 ring-gray-500">
-                View Cart
-              </button>
+            <div className="flex justify-end text-sm">
               <button
                 className="rounded-md py-3 px-4 bg-black text-white disabled:cursor-not-allowed disabled:opacity-75"
                 disabled={isLoading}

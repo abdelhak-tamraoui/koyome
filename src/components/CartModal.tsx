@@ -7,13 +7,25 @@ import { useWixClient } from "@/hooks/useWixClient";
 import { currentCart } from "@wix/ecom";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 const CartModal = () => {
-  // TEMPORARY
-  // const cartItems = true;
+  const [subtotal, setSubtotal] = useState(0);
   const router = useRouter();
   const wixClient = useWixClient();
   const { cart, isLoading, removeItem } = useCartStore();
+
+  useEffect(() => {
+    cart.lineItems?.forEach((item) => {
+      setSubtotal((prev) => {
+        if (item.price?.amount !== undefined && item.quantity !== undefined) {
+          prev += +item.price?.amount * item.quantity;
+          return prev;
+        }
+        return prev;
+      });
+    });
+  }, [cart.lineItems]);
 
   const handleCheckout = async () => {
     // try {
@@ -103,7 +115,7 @@ const CartModal = () => {
           <div className="">
             <div className="flex items-center justify-between font-semibold">
               <span className="">Subtotal</span>
-              {/* <span className="">${cart.subtotal.amount}</span> */}
+              <span className="">${subtotal}</span>
             </div>
             <p className="text-gray-500 text-sm mt-2 mb-4">
               Shipping and taxes calculated at checkout.

@@ -9,15 +9,18 @@ import DOMPurify from "isomorphic-dompurify";
 import ProductList from "@/components/ProductList";
 
 const SinglePage = async ({ params }: { params: { slug: string } }) => {
-  const wixClient = await wixClientServer();
-  const products = await wixClient.products
-    .queryProducts()
-    .eq("_id", params.slug)
-    .find();
-  if (!products.items[0]) {
+  let products;
+  try {
+    const wixClient = await wixClientServer();
+    products = await wixClient.products
+      .queryProducts()
+      .eq("_id", params.slug)
+      .find();
+  } catch (error) {}
+
+  if (!products?.items[0]) {
     return notFound();
   }
-
   const product = products.items[0];
 
   return (

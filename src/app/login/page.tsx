@@ -62,29 +62,37 @@ const LoginPage = () => {
 
       switch (mode) {
         case MODE.LOGIN:
-          response = await wixClient.auth.login({
-            email,
-            password,
-          });
+          try {
+            response = await wixClient.auth.login({
+              email,
+              password,
+            });
+          } catch (error) {}
           break;
         case MODE.REGISTER:
-          response = await wixClient.auth.register({
-            email,
-            password,
-            profile: { nickname: username },
-          });
+          try {
+            response = await wixClient.auth.register({
+              email,
+              password,
+              profile: { nickname: username },
+            });
+          } catch (error) {}
           break;
         case MODE.RESET_PASSWORD:
-          response = await wixClient.auth.sendPasswordResetEmail(
-            email,
-            window.location.href
-          );
-          setMessage("Password reset email sent. Please check your e-mail.");
+          try {
+            response = await wixClient.auth.sendPasswordResetEmail(
+              email,
+              window.location.href
+            );
+            setMessage("Password reset email sent. Please check your e-mail.");
+          } catch (error) {}
           break;
         case MODE.EMAIL_VERIFICATION:
-          response = await wixClient.auth.processVerification({
-            verificationCode: emailCode,
-          });
+          try {
+            response = await wixClient.auth.processVerification({
+              verificationCode: emailCode,
+            });
+          } catch (error) {}
           break;
         default:
           break;
@@ -93,15 +101,19 @@ const LoginPage = () => {
       switch (response?.loginState) {
         case LoginState.SUCCESS:
           setMessage("Successful! You are being redirected.");
-          const tokens = await wixClient.auth.getMemberTokensForDirectLogin(
-            response.data.sessionToken!
-          );
 
-          Cookies.set("refreshToken", JSON.stringify(tokens.refreshToken), {
-            expires: 2,
-          });
-          wixClient.auth.setTokens(tokens);
-          router.push("/");
+          let tokens;
+          try {
+            tokens = await wixClient.auth.getMemberTokensForDirectLogin(
+              response.data.sessionToken!
+            );
+            Cookies.set("refreshToken", JSON.stringify(tokens.refreshToken), {
+              expires: 2,
+            });
+            wixClient.auth.setTokens(tokens);
+            router.push("/");
+          } catch (error) {}
+
           break;
         case LoginState.FAILURE:
           if (
