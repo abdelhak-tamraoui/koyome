@@ -16,6 +16,7 @@ const CartModal = () => {
   const { cart, isLoading, removeItem } = useCartStore();
 
   useEffect(() => {
+    setSubtotal(0);
     cart.lineItems?.forEach((item) => {
       setSubtotal((prev) => {
         if (item.price?.amount !== undefined && item.quantity !== undefined) {
@@ -25,7 +26,7 @@ const CartModal = () => {
         return prev;
       });
     });
-  }, [isLoading, cart.lineItems]);
+  }, [cart.lineItems]);
 
   const handleCheckout = async () => {
     // try {

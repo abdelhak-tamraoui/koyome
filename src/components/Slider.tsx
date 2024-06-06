@@ -50,11 +50,11 @@ const Slider = () => {
       >
         {slides.map((slide) => (
           <div
-            className={`${slide.bg} w-screen h-full flex flex-col gap-16 xl:flex-row`}
+            className={`${slide.bg} w-screen h-full flex flex-col  lg:flex-row`}
             key={slide.id}
           >
             {/* TEXT CONTAINER */}
-            <div className="h-1/2 xl:w-1/2 xl:h-full flex flex-col items-center justify-center gap-8 2xl:gap-12 text-center">
+            <div className="h-1/2 lg:w-1/2 lg:h-full px-12 py-24 flex flex-col items-center justify-center gap-4 2xl:gap-12 text-center">
               <h2 className="text-lg lg:text-2xl 2xl:text-4xl">
                 {slide.description}
               </h2>
@@ -68,7 +68,7 @@ const Slider = () => {
               </Link>
             </div>
             {/* IMAGE CONTAINER */}
-            <div className="h-1/2 xl:w-1/2 xl:h-full relative">
+            <div className="h-1/2 lg:w-1/2 lg:h-full relative">
               <Image
                 src={slide.img}
                 alt=""

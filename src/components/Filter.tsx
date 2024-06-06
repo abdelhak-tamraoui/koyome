@@ -23,19 +23,19 @@ const Filter = ({
 
   return (
     <div className="mt-12 flex justify-between">
-      <div className="flex gap-6 flex-wrap">
+      <div className="flex gap-6 flex-wrap items-center">
         <input
           type="text"
           name="min"
           placeholder="min price"
-          className="text-xs rounded-2xl pl-2 w-24 ring-1 ring-gray-400"
+          className="text-xs py-2 px-4 rounded-2xl w-24 ring-1 ring-gray-400"
           onChange={handleFilterChange}
         />
         <input
           type="text"
           name="max"
           placeholder="max price"
-          className="text-xs rounded-2xl pl-2 w-24 ring-1 ring-gray-400"
+          className="text-xs py-2 px-4 rounded-2xl w-24 ring-1 ring-gray-400"
           onChange={handleFilterChange}
         />
         {/* TODO: Filter Categories */}
