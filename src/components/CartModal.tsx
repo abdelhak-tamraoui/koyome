@@ -25,7 +25,7 @@ const CartModal = () => {
         return prev;
       });
     });
-  }, [cart.lineItems]);
+  }, [isLoading, cart.lineItems]);
 
   const handleCheckout = async () => {
     // try {
